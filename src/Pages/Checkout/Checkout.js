@@ -6,7 +6,6 @@ const Checkout = () => {
     const service = useLoaderData();
     const { _id, title, price } = service;
     const { user } = useContext(AuthContext);
-    console.log("🚀 ~ user", user);
 
     const handlePlaceHolder = (event) => {
         event.preventDefault();
@@ -23,8 +22,32 @@ const Checkout = () => {
             customer: name,
             email,
             phone,
-            message,
+            message
         };
+
+        // if (phone.length < 10) {
+        //     alert('Phone number should be 10 characters or longer');
+        // }
+        // else{
+
+        // }
+
+        fetch(`http://localhost:5000/orders`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    alert('Order placed successfully');
+                    form.reset();
+                }
+            })
+            .catch(err => console.error('err', err));
     };
 
     return (
@@ -35,10 +58,10 @@ const Checkout = () => {
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
                     <input name="firstName" type="text" placeholder="First Name" className="input input-ghost input-bordered w-full" />
                     <input name="lastName" type="text" placeholder="Last Name" className="input input-ghost input-bordered w-full" />
-                    <input name="phone" type="text" placeholder="Your Phone" className="input input-ghost input-bordered w-full" />
+                    <input name="phone" type="text" placeholder="Your Phone" className="input input-ghost input-bordered w-full" required />
                     <input name="email" type="text" placeholder="Your Email" defaultValue={user?.email} readOnly className="input input-ghost input-bordered w-full" />
                 </div>
-                <textarea name="message" className="textarea textarea-bordered h-24 w-full" placeholder="Your Message"></textarea>
+                <textarea name="message" className="textarea textarea-bordered h-24 w-full" placeholder="Your Message" required></textarea>
                 <input className='btn' type="submit" value="Place Your Order" />
             </form>
         </div>
