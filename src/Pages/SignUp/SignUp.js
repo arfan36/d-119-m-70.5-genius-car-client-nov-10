@@ -12,6 +12,7 @@ const SignUp = () => {
         const email = form.email.value;
         const password = form.password.value;
 
+        // create user with email and password
         createUser(email, password).then((result) => {
             const user = result.user;
             console.log('user :>> ', user);
