@@ -16,7 +16,7 @@ const Login = () => {
         // log in with email and password
         login(email, password).then((result) => {
             const user = result.user;
-            // console.log('user :>> ', user);
+            console.log('user :>> ', user);
         }).catch((err) => {
             console.error('err', err);
         });
