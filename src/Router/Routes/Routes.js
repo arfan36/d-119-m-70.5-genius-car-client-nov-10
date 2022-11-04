@@ -6,6 +6,8 @@ import Login from "../../Pages/Login/Login";
 import Orders from "../../Pages/Orders/Orders";
 import SignUp from "../../Pages/SignUp/SignUp";
 
+// const { createBrowserRouter } = require("react-router-dom");
+
 const router = createBrowserRouter([
     {
         path: '/',
