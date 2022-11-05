@@ -1,11 +1,17 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import useTitle from '../../hooks/useTitle';
 
 const Login = () => {
+    const [error, setError] = useState('');
 
-    const { login } = useContext(AuthContext);
+    const { login, setLoading } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    useTitle('login');
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -17,9 +23,14 @@ const Login = () => {
         login(email, password).then((result) => {
             const user = result.user;
             console.log('user :>> ', user);
+            navigate(from, { replace: true });
         }).catch((err) => {
             console.error('err', err);
-        });
+            setError(err.message);
+        })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
@@ -49,6 +60,9 @@ const Login = () => {
                         <div className="form-control mt-6">
                             <input className='btn btn-primary' type="submit" value="Login" />
                         </div>
+                        <p className='text-red-600'>
+                            {error}
+                        </p>
                     </form>
                     <p className='text-center'>New to Genius Car <Link className='text-orange-600 font-bold' to={'/signup'}>Sign Up</Link></p>
                 </div>
