@@ -12,7 +12,6 @@ const Orders = () => {
             .then(data => setOrders(data));
     }, [user?.email]);
 
-
     // handle delete
     const handleDelete = (id) => {
         const proceed = window.confirm('Are you sure you warn to cancel this order');
@@ -35,6 +34,7 @@ const Orders = () => {
 
     // handle update
     const handleStatusUpdate = (id) => {
+        // update (U)
         fetch(`http://localhost:5000/orders/${id}`, {
             method: 'PATCH',
             headers: {
@@ -55,6 +55,7 @@ const Orders = () => {
                 }
             })
             .catch(err => console.error('err', err));
+
     };
 
     return (
@@ -74,12 +75,14 @@ const Orders = () => {
                     </thead>
                     <tbody>
                         {
-                            orders.map(order => <OrderRow
-                                key={order._id}
-                                order={order}
-                                handleDelete={handleDelete}
-                                handleStatusUpdate={handleStatusUpdate}
-                            ></OrderRow>)
+                            orders.map(order =>
+                                <OrderRow
+                                    key={order._id}
+                                    order={order}
+                                    handleDelete={handleDelete}
+                                    handleStatusUpdate={handleStatusUpdate}
+                                ></OrderRow>
+                            )
                         }
                     </tbody>
                 </table>
