@@ -23,6 +23,7 @@ const Login = () => {
         login(email, password).then((result) => {
             const user = result.user;
             console.log('user :>> ', user);
+            setError('');
             navigate(from, { replace: true });
         }).catch((err) => {
             console.error('err', err);
