@@ -33,7 +33,7 @@ const Checkout = () => {
 
         // }
 
-        fetch(`http://localhost:5000/orders`, {
+        fetch(`https://d-113-1-m-69-genius-car-server-nov-03.vercel.app/orders`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
