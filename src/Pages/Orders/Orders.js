@@ -14,15 +14,15 @@ const Orders = () => {
         })
             .then(res => {
                 if (res.status === 401 || res.status === 403) {
-                    logOut();
+                    localStorage.removeItem('genius-token');
+                    return logOut();
                 }
                 return res.json();
             })
             .then(data => {
-                // console.log('received :>> ', data);
                 setOrders(data);
             });
-    }, [user?.email]);
+    }, [user?.email, logOut]);
 
     // handle delete
     const handleDelete = (id) => {
@@ -30,6 +30,9 @@ const Orders = () => {
         if (proceed) {
             fetch(`http://localhost:5000/orders/${id}`, {
                 method: 'DELETE',
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('genius-token')}`
+                }
             })
                 .then(res => res.json())
                 .then(data => {
@@ -50,13 +53,13 @@ const Orders = () => {
         fetch(`http://localhost:5000/orders/${id}`, {
             method: 'PATCH',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('genius-token')}`
             },
             body: JSON.stringify({ status: 'approved' })
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.modifiedCount > 0) {
                     const remaining = orders.filter(odr => odr._id !== id);
                     const approving = orders.find(odr => odr._id === id);
