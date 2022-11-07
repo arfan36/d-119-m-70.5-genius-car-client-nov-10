@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
@@ -7,6 +8,7 @@ const SignUp = () => {
     const [error, setError] = useState('');
 
     const { createUser } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleSignUp = (event) => {
         event.preventDefault();
@@ -20,6 +22,8 @@ const SignUp = () => {
             console.log('user :>> ', user);
             setError('');
             form.reset();
+            navigate('/login');
+            toast.success('Successfully signup, Please login');
         }).catch((err) => {
             console.error('err', err);
             setError(err.message);

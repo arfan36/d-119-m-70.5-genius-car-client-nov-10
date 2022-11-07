@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
@@ -25,6 +26,7 @@ const Login = () => {
             console.log('user :>> ', user);
             setError('');
             navigate(from, { replace: true });
+            toast.success('login success');
         }).catch((err) => {
             console.error('err', err);
             setError(err.message);

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo.svg';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
@@ -8,7 +9,7 @@ const Header = () => {
 
     const handleLogOut = () => {
         logOut().then(() => {
-            console.log('User successfully logout');
+            toast.success('successfully logout');
         }).catch((err) => {
             console.error('err', err);
         });

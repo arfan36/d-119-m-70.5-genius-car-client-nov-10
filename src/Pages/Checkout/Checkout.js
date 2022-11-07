@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
@@ -43,7 +44,7 @@ const Checkout = () => {
             .then(data => {
                 console.log(data);
                 if (data.acknowledged) {
-                    alert('Order placed successfully');
+                    toast.success('Order placed successfully');
                     form.reset();
                 }
             })
