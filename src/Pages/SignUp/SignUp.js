@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import { setAuthToken } from '../../api/auth';
 import img from '../../assets/images/login/login.svg';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
@@ -19,6 +20,9 @@ const SignUp = () => {
         // create user with email and password
         createUser(email, password).then((result) => {
             const user = result.user;
+
+            setAuthToken(user);
+
             console.log('user :>> ', user);
             setError('');
             form.reset();
